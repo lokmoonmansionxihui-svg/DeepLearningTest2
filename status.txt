@@ -1,0 +1,34 @@
+# Research status — demean100 + tc7 (LSTM nobias h=16, seed 42)
+
+Configuration:
+- Return demeaning (Sharpe loss): 100-day rolling mean of forward returns removed before loss.
+- Position demeaning: causal 100-day rolling mean subtracted from tanh(position); first 10 days (960 x 15m bars) forced to zero exposure.
+- Training cost: 7 bps per |Δposition|; evaluation cost: 2 bps (reported PnL / Sharpe below are net of 2 bps unless noted).
+
+## Annualized Sharpe (net of 2 bps eval costs)
+
+| Split  | Net Sharpe | Notes |
+|--------|------------|--------|
+| Train  | +3.28      | Full-sequence eval on training dates |
+| Val    | +1.36      | Best checkpoint val Sharpe (peak) ≈ +1.36 |
+| Test   | +0.41      | From saved results JSON (49,632 periods) |
+| Paper  | +0.17      | OOS Jun 2025 – Mar 2026 (sample-out vs train/val/test) |
+
+Gross Sharpe (before eval costs, same splits): train +3.69, val +2.54, test +1.02, paper +1.25.
+
+Reference: always-long on test ≈ +1.22 Sharpe (no trading costs in baseline).
+
+---
+
+## What we explored (short)
+
+1. **Objective**: Multi-resolution (1m / 1h / 8h) LSTM → position in [-1,1], optimize **annualized Sharpe** with a two-pass full-sequence gradient (exact Sharpe derivative).
+2. **Return demeaning**: 100d rolling mean on returns so the model chases timing vs unconditional drift.
+3. **Transaction-cost regularization**: Train with artificial `cost_bps` (5–16 bps sweep); **tc7 + position demean (dmp100)** gave the best paper net Sharpe in experiments (+0.17 net vs negative for higher tc on paper in some configs).
+4. **Position demeaning (dmp100)**: Subtract causal 100d mean of positions to remove long-only beta; long/short mix ~45–47% / 45% on test; paper still positive net Sharpe only for tc7 among the grid we ran.
+5. **Features**: Per-asset 23 engineered columns (returns, vol, volume, imbalance, basis vs spot, etc.) at three resolutions; optional **wide** 8-asset stack (184 cols) — training requires splitting GPU preload (train+val only first) to fit VRAM.
+6. **Ablations**: Feature groups (ret, basis, imbalance, …), hidden size (e.g. h32 overfit vs h16 on paper), multi-tc comparison (tc5–tc16 with dmp100).
+
+---
+
+Last updated: 2026-04-12

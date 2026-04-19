@@ -1,0 +1,24 @@
+{
+  "symbol": "BTCUSDT",
+  "variant": "tanh",
+  "hidden": 64,
+  "n_params": 147712,
+  "loss": "sharpe",
+  "lambda_risk": null,
+  "seed": 42,
+  "best_val_sharpe": 0.5775284866083018,
+  "test": {
+    "sharpe_annual": -0.33105079182546604,
+    "mean_pnl_bps": -0.042667075991630554,
+    "total_pnl_bps": -2117.65234375,
+    "max_drawdown_bps": 5137.42578125,
+    "avg_turnover_per_rebal": 0.1393170952796936,
+    "daily_turnover": 13.374441146850586,
+    "avg_abs_position": 0.8438817262649536,
+    "pct_long": 91.42286777496338,
+    "pct_short": 6.4857348799705505,
+    "pct_flat": 2.0913925021886826,
+    "n_periods": 49632
+  },
+  "always_long_sharpe": 1.220625316393508
+}

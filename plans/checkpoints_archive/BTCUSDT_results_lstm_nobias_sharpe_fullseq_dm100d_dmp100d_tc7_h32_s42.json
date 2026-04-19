@@ -1,0 +1,29 @@
+{
+  "symbol": "BTCUSDT",
+  "model": "lstm",
+  "variant": "nobias",
+  "hidden": 32,
+  "n_params": 25760,
+  "loss": "sharpe",
+  "lambda_risk": null,
+  "train_cost_bps": 7.0,
+  "eval_cost_bps": 2.0,
+  "demean_pos_window": 100,
+  "demean_pos_min": 10,
+  "seed": 42,
+  "best_val_sharpe": 1.1698239441892435,
+  "test": {
+    "sharpe_annual": 0.11214967039398917,
+    "mean_pnl_bps": 0.013082158751785755,
+    "total_pnl_bps": 649.293701171875,
+    "max_drawdown_bps": 4855.18603515625,
+    "avg_turnover_per_rebal": 0.0268448106944561,
+    "daily_turnover": 2.5771018266677856,
+    "avg_abs_position": 0.6840501427650452,
+    "pct_long": 51.57760977745056,
+    "pct_short": 42.670050263404846,
+    "pct_flat": 5.7523369789123535,
+    "n_periods": 49632
+  },
+  "always_long_sharpe": 1.220625316393508
+}

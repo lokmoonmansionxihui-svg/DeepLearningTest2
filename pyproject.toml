@@ -1,0 +1,19 @@
+[project]
+name = "cryptodl"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "torch==2.5.1",
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "scikit-learn",
+    "python-binance",
+    "tqdm",
+    "ipykernel",
+    "pyarrow",
+]
+
+[tool.uv]
+extra-index-url = ["https://download.pytorch.org/whl/cu124"]
+index-strategy = "unsafe-best-match"
